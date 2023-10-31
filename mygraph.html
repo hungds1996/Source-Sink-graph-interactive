@@ -1,0 +1,116 @@
+<html>
+<head>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis.css" type="text/css" />
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis-network.min.js"> </script>
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+
+<style type="text/css">
+
+        #mynetwork {
+            width: 100%;
+            height: 1000px;
+            background-color: #222222;
+            border: 1px solid lightgray;
+            position: relative;
+            float: left;
+        }
+
+        
+
+        
+
+        
+</style>
+
+</head>
+
+<body>
+<div id = "mynetwork"></div>
+
+
+<script type="text/javascript">
+
+    // initialize global variables.
+    var edges;
+    var nodes;
+    var network; 
+    var container;
+    var options, data;
+
+    
+    // This method is responsible for drawing the graph, returns the drawn network
+    function drawGraph() {
+        var container = document.getElementById('mynetwork');
+        
+        
+
+        // parsing and collecting nodes and edges from the python
+        nodes = new vis.DataSet([{"font": {"color": "white"}, "id": "GOLD_PACK", "label": "GOLD_PACK", "shape": "dot", "title": "GOLD_PACK Neighbor: \u003cbr\u003eCHAPTER_PACK\u003cbr\u003ePATROL_EARNING\u003cbr\u003eSTAGE_REWARD\u003cbr\u003eBUY_ENERGY\u003cbr\u003ePURCHASE_GOLD\u003cbr\u003eSTAGE_CLEAR_REWARD\u003cbr\u003eOPEN_CRATE\u003cbr\u003eGOLD_PACK\u003cbr\u003eSTAGE_STEP_REWARD", "value": 9}, {"font": {"color": "white"}, "id": "BUY_ENERGY", "label": "BUY_ENERGY", "shape": "dot", "title": "BUY_ENERGY Neighbor: \u003cbr\u003ePATROL_EARNING\u003cbr\u003eSTAGE_REWARD\u003cbr\u003eBUY_ENERGY\u003cbr\u003eSTAGE_CLEAR_REWARD\u003cbr\u003eOPEN_CRATE\u003cbr\u003eGOLD_PACK\u003cbr\u003eSTAGE_STEP_REWARD", "value": 7}, {"font": {"color": "white"}, "id": "STAGE_STEP_REWARD", "label": "STAGE_STEP_REWARD", "shape": "dot", "title": "STAGE_STEP_REWARD Neighbor: \u003cbr\u003ePATROL_EARNING\u003cbr\u003eSTAGE_REWARD\u003cbr\u003eBUY_ENERGY\u003cbr\u003eMERGE_EQUIPMENT\u003cbr\u003ePURCHASE_GOLD\u003cbr\u003eSTAGE_CLEAR_REWARD\u003cbr\u003eOPEN_CRATE\u003cbr\u003eGOLD_PACK\u003cbr\u003eSTAGE_STEP_REWARD", "value": 9}, {"font": {"color": "white"}, "id": "CHAPTER_PACK", "label": "CHAPTER_PACK", "shape": "dot", "title": "CHAPTER_PACK Neighbor: \u003cbr\u003eCHAPTER_PACK\u003cbr\u003eOPEN_CRATE", "value": 2}, {"font": {"color": "white"}, "id": "OPEN_CRATE", "label": "OPEN_CRATE", "shape": "dot", "title": "OPEN_CRATE Neighbor: \u003cbr\u003eCHAPTER_PACK\u003cbr\u003ePATROL_EARNING\u003cbr\u003eSTAGE_REWARD\u003cbr\u003eBUY_ENERGY\u003cbr\u003eMERGE_EQUIPMENT\u003cbr\u003ePURCHASE_GOLD\u003cbr\u003eFIRST_TIME_IAP\u003cbr\u003eSTAGE_CLEAR_REWARD\u003cbr\u003eOPEN_CRATE\u003cbr\u003eQUICK_EARNING\u003cbr\u003eGOLD_PACK\u003cbr\u003eSTAGE_STEP_REWARD", "value": 12}, {"font": {"color": "white"}, "id": "PATROL_EARNING", "label": "PATROL_EARNING", "shape": "dot", "title": "PATROL_EARNING Neighbor: \u003cbr\u003ePATROL_EARNING\u003cbr\u003eDAILY_SHOP\u003cbr\u003eSTAGE_REWARD\u003cbr\u003eMERGE_EQUIPMENT\u003cbr\u003eGEM_PACK\u003cbr\u003ePURCHASE_GOLD\u003cbr\u003eSTAGE_CLEAR_REWARD\u003cbr\u003eOPEN_CRATE\u003cbr\u003eQUICK_EARNING\u003cbr\u003eGOLD_PACK\u003cbr\u003eSTAGE_STEP_REWARD", "value": 11}, {"font": {"color": "white"}, "id": "DAILY_SHOP", "label": "DAILY_SHOP", "shape": "dot", "title": "DAILY_SHOP Neighbor: \u003cbr\u003eSTAGE_REWARD\u003cbr\u003ePURCHASE_EQUIPMENT", "value": 2}, {"font": {"color": "white"}, "id": "GEM_PACK", "label": "GEM_PACK", "shape": "dot", "title": "GEM_PACK Neighbor: \u003cbr\u003ePATROL_EARNING\u003cbr\u003eSTAGE_REWARD\u003cbr\u003eMERGE_EQUIPMENT\u003cbr\u003eFIRST_TIME_IAP\u003cbr\u003eSTAGE_CLEAR_REWARD\u003cbr\u003ePURCHASE_EQUIPMENT", "value": 6}, {"font": {"color": "white"}, "id": "STAGE_REWARD", "label": "STAGE_REWARD", "shape": "dot", "title": "STAGE_REWARD Neighbor: \u003cbr\u003ePATROL_EARNING\u003cbr\u003eSTAGE_REWARD\u003cbr\u003eBUY_ENERGY\u003cbr\u003eMERGE_EQUIPMENT\u003cbr\u003eGEM_PACK\u003cbr\u003ePURCHASE_GOLD\u003cbr\u003eSTAGE_CLEAR_REWARD\u003cbr\u003eOPEN_CRATE\u003cbr\u003eQUICK_EARNING\u003cbr\u003eGOLD_PACK\u003cbr\u003eSTAGE_STEP_REWARD", "value": 11}, {"font": {"color": "white"}, "id": "PURCHASE_GOLD", "label": "PURCHASE_GOLD", "shape": "dot", "title": "PURCHASE_GOLD Neighbor: \u003cbr\u003eGOLD_PACK\u003cbr\u003eOPEN_CRATE", "value": 2}, {"font": {"color": "white"}, "id": "PURCHASE_EQUIPMENT", "label": "PURCHASE_EQUIPMENT", "shape": "dot", "title": "PURCHASE_EQUIPMENT Neighbor: \u003cbr\u003eDAILY_SHOP", "value": 1}, {"font": {"color": "white"}, "id": "MERGE_EQUIPMENT", "label": "MERGE_EQUIPMENT", "shape": "dot", "title": "MERGE_EQUIPMENT Neighbor: \u003cbr\u003eSTAGE_CLEAR_REWARD\u003cbr\u003eGOLD_PACK\u003cbr\u003ePATROL_EARNING\u003cbr\u003eSTAGE_REWARD", "value": 4}, {"font": {"color": "white"}, "id": "QUICK_EARNING", "label": "QUICK_EARNING", "shape": "dot", "title": "QUICK_EARNING Neighbor: \u003cbr\u003ePATROL_EARNING\u003cbr\u003eSTAGE_REWARD\u003cbr\u003eSTAGE_CLEAR_REWARD\u003cbr\u003eOPEN_CRATE\u003cbr\u003eQUICK_EARNING", "value": 5}, {"font": {"color": "white"}, "id": "STAGE_CLEAR_REWARD", "label": "STAGE_CLEAR_REWARD", "shape": "dot", "title": "STAGE_CLEAR_REWARD Neighbor: \u003cbr\u003eSTAGE_CLEAR_REWARD", "value": 1}, {"font": {"color": "white"}, "id": "FIRST_TIME_IAP", "label": "FIRST_TIME_IAP", "shape": "dot", "title": "FIRST_TIME_IAP Neighbor: \u003cbr\u003ePURCHASE_GOLD\u003cbr\u003eFIRST_TIME_IAP", "value": 2}]);
+        edges = new vis.DataSet([{"arrows": "to", "from": "GOLD_PACK", "to": "BUY_ENERGY", "value": 0.0027974087161366313}, {"arrows": "to", "from": "STAGE_STEP_REWARD", "to": "STAGE_STEP_REWARD", "value": 0.1482442748091603}, {"arrows": "to", "from": "CHAPTER_PACK", "to": "OPEN_CRATE", "value": 0.5}, {"arrows": "to", "from": "PATROL_EARNING", "to": "OPEN_CRATE", "value": 0.09826589595375723}, {"arrows": "to", "from": "PATROL_EARNING", "to": "DAILY_SHOP", "value": 0.005780346820809248}, {"arrows": "to", "from": "OPEN_CRATE", "to": "CHAPTER_PACK", "value": 7.28650539201399e-05}, {"arrows": "to", "from": "PATROL_EARNING", "to": "GEM_PACK", "value": 0.028901734104046242}, {"arrows": "to", "from": "STAGE_REWARD", "to": "STAGE_REWARD", "value": 0.6277648014623743}, {"arrows": "to", "from": "PURCHASE_GOLD", "to": "OPEN_CRATE", "value": 0.7832310838445807}, {"arrows": "to", "from": "GOLD_PACK", "to": "STAGE_STEP_REWARD", "value": 0.06073321554770318}, {"arrows": "to", "from": "STAGE_STEP_REWARD", "to": "PURCHASE_GOLD", "value": 0.008702290076335878}, {"arrows": "to", "from": "OPEN_CRATE", "to": "OPEN_CRATE", "value": 0.1919265520256485}, {"arrows": "to", "from": "GEM_PACK", "to": "PURCHASE_EQUIPMENT", "value": 0.16666666666666666}, {"arrows": "to", "from": "PATROL_EARNING", "to": "MERGE_EQUIPMENT", "value": 0.005780346820809248}, {"arrows": "to", "from": "STAGE_REWARD", "to": "MERGE_EQUIPMENT", "value": 2.031075454453133e-05}, {"arrows": "to", "from": "STAGE_REWARD", "to": "GEM_PACK", "value": 4.062150908906266e-05}, {"arrows": "to", "from": "STAGE_REWARD", "to": "BUY_ENERGY", "value": 0.007068142581496902}, {"arrows": "to", "from": "STAGE_REWARD", "to": "PURCHASE_GOLD", "value": 0.009099218035950036}, {"arrows": "to", "from": "OPEN_CRATE", "to": "PATROL_EARNING", "value": 0.0030603322646458758}, {"arrows": "to", "from": "BUY_ENERGY", "to": "STAGE_REWARD", "value": 0.8362445414847162}, {"arrows": "to", "from": "QUICK_EARNING", "to": "QUICK_EARNING", "value": 0.1111111111111111}, {"arrows": "to", "from": "QUICK_EARNING", "to": "STAGE_CLEAR_REWARD", "value": 0.1111111111111111}, {"arrows": "to", "from": "BUY_ENERGY", "to": "BUY_ENERGY", "value": 0.03711790393013101}, {"arrows": "to", "from": "OPEN_CRATE", "to": "GOLD_PACK", "value": 0.24533663654911106}, {"arrows": "to", "from": "BUY_ENERGY", "to": "STAGE_CLEAR_REWARD", "value": 0.04585152838427948}, {"arrows": "to", "from": "STAGE_REWARD", "to": "PATROL_EARNING", "value": 0.0015029958362953184}, {"arrows": "to", "from": "PATROL_EARNING", "to": "QUICK_EARNING", "value": 0.04046242774566474}, {"arrows": "to", "from": "GEM_PACK", "to": "PATROL_EARNING", "value": 0.16666666666666666}, {"arrows": "to", "from": "DAILY_SHOP", "to": "STAGE_REWARD", "value": 0.6666666666666666}, {"arrows": "to", "from": "BUY_ENERGY", "to": "GOLD_PACK", "value": 0.026200873362445413}, {"arrows": "to", "from": "GEM_PACK", "to": "STAGE_REWARD", "value": 0.16666666666666666}, {"arrows": "to", "from": "OPEN_CRATE", "to": "MERGE_EQUIPMENT", "value": 7.28650539201399e-05}, {"arrows": "to", "from": "GOLD_PACK", "to": "OPEN_CRATE", "value": 0.07516195524146055}, {"arrows": "to", "from": "STAGE_STEP_REWARD", "to": "STAGE_CLEAR_REWARD", "value": 0.05267175572519084}, {"arrows": "to", "from": "STAGE_REWARD", "to": "QUICK_EARNING", "value": 4.062150908906266e-05}, {"arrows": "to", "from": "FIRST_TIME_IAP", "to": "FIRST_TIME_IAP", "value": 0.6666666666666666}, {"arrows": "to", "from": "STAGE_STEP_REWARD", "to": "GOLD_PACK", "value": 0.1467175572519084}, {"arrows": "to", "from": "OPEN_CRATE", "to": "BUY_ENERGY", "value": 0.0033517924803264354}, {"arrows": "to", "from": "PATROL_EARNING", "to": "PATROL_EARNING", "value": 0.1907514450867052}, {"arrows": "to", "from": "PURCHASE_EQUIPMENT", "to": "DAILY_SHOP", "value": 1.0}, {"arrows": "to", "from": "MERGE_EQUIPMENT", "to": "GOLD_PACK", "value": 0.2}, {"arrows": "to", "from": "PATROL_EARNING", "to": "GOLD_PACK", "value": 0.09248554913294797}, {"arrows": "to", "from": "GOLD_PACK", "to": "STAGE_CLEAR_REWARD", "value": 0.021716725559481745}, {"arrows": "to", "from": "GOLD_PACK", "to": "GOLD_PACK", "value": 0.5504269729093051}, {"arrows": "to", "from": "OPEN_CRATE", "to": "STAGE_REWARD", "value": 0.4638589332556106}, {"arrows": "to", "from": "STAGE_CLEAR_REWARD", "to": "STAGE_CLEAR_REWARD", "value": 1.0}, {"arrows": "to", "from": "GOLD_PACK", "to": "PURCHASE_GOLD", "value": 0.022526501766784453}, {"arrows": "to", "from": "OPEN_CRATE", "to": "PURCHASE_GOLD", "value": 0.011148353249781405}, {"arrows": "to", "from": "BUY_ENERGY", "to": "STAGE_STEP_REWARD", "value": 0.026200873362445413}, {"arrows": "to", "from": "OPEN_CRATE", "to": "QUICK_EARNING", "value": 7.28650539201399e-05}, {"arrows": "to", "from": "STAGE_REWARD", "to": "STAGE_CLEAR_REWARD", "value": 0.010825632172235198}, {"arrows": "to", "from": "STAGE_STEP_REWARD", "to": "BUY_ENERGY", "value": 0.006717557251908397}, {"arrows": "to", "from": "STAGE_STEP_REWARD", "to": "PATROL_EARNING", "value": 0.002748091603053435}, {"arrows": "to", "from": "PATROL_EARNING", "to": "STAGE_STEP_REWARD", "value": 0.10404624277456648}, {"arrows": "to", "from": "BUY_ENERGY", "to": "OPEN_CRATE", "value": 0.026200873362445413}, {"arrows": "to", "from": "QUICK_EARNING", "to": "STAGE_REWARD", "value": 0.3333333333333333}, {"arrows": "to", "from": "MERGE_EQUIPMENT", "to": "STAGE_CLEAR_REWARD", "value": 0.2}, {"arrows": "to", "from": "OPEN_CRATE", "to": "STAGE_CLEAR_REWARD", "value": 0.024919848440687845}, {"arrows": "to", "from": "GEM_PACK", "to": "MERGE_EQUIPMENT", "value": 0.16666666666666666}, {"arrows": "to", "from": "GOLD_PACK", "to": "PATROL_EARNING", "value": 0.0013987043580683156}, {"arrows": "to", "from": "PATROL_EARNING", "to": "STAGE_CLEAR_REWARD", "value": 0.04046242774566474}, {"arrows": "to", "from": "DAILY_SHOP", "to": "PURCHASE_EQUIPMENT", "value": 0.3333333333333333}, {"arrows": "to", "from": "STAGE_STEP_REWARD", "to": "STAGE_REWARD", "value": 0.5343511450381679}, {"arrows": "to", "from": "PATROL_EARNING", "to": "STAGE_REWARD", "value": 0.3236994219653179}, {"arrows": "to", "from": "PURCHASE_GOLD", "to": "GOLD_PACK", "value": 0.2167689161554192}, {"arrows": "to", "from": "GOLD_PACK", "to": "CHAPTER_PACK", "value": 0.00014723203769140164}, {"arrows": "to", "from": "CHAPTER_PACK", "to": "CHAPTER_PACK", "value": 0.5}, {"arrows": "to", "from": "FIRST_TIME_IAP", "to": "PURCHASE_GOLD", "value": 0.3333333333333333}, {"arrows": "to", "from": "STAGE_REWARD", "to": "OPEN_CRATE", "value": 0.19693307606377577}, {"arrows": "to", "from": "GOLD_PACK", "to": "STAGE_REWARD", "value": 0.26509128386336867}, {"arrows": "to", "from": "PATROL_EARNING", "to": "PURCHASE_GOLD", "value": 0.06936416184971098}, {"arrows": "to", "from": "STAGE_REWARD", "to": "STAGE_STEP_REWARD", "value": 0.09797907992281914}, {"arrows": "to", "from": "STAGE_REWARD", "to": "GOLD_PACK", "value": 0.04872550015233066}, {"arrows": "to", "from": "OPEN_CRATE", "to": "STAGE_STEP_REWARD", "value": 0.05610609151850773}, {"arrows": "to", "from": "STAGE_STEP_REWARD", "to": "OPEN_CRATE", "value": 0.09969465648854962}, {"arrows": "to", "from": "QUICK_EARNING", "to": "PATROL_EARNING", "value": 0.3333333333333333}, {"arrows": "to", "from": "BUY_ENERGY", "to": "PATROL_EARNING", "value": 0.002183406113537118}, {"arrows": "to", "from": "STAGE_STEP_REWARD", "to": "MERGE_EQUIPMENT", "value": 0.00015267175572519084}, {"arrows": "to", "from": "MERGE_EQUIPMENT", "to": "STAGE_REWARD", "value": 0.4}, {"arrows": "to", "from": "MERGE_EQUIPMENT", "to": "PATROL_EARNING", "value": 0.2}, {"arrows": "to", "from": "QUICK_EARNING", "to": "OPEN_CRATE", "value": 0.1111111111111111}, {"arrows": "to", "from": "OPEN_CRATE", "to": "FIRST_TIME_IAP", "value": 7.28650539201399e-05}, {"arrows": "to", "from": "GEM_PACK", "to": "STAGE_CLEAR_REWARD", "value": 0.16666666666666666}, {"arrows": "to", "from": "GEM_PACK", "to": "FIRST_TIME_IAP", "value": 0.16666666666666666}]);
+
+        // adding nodes and edges to the graph
+        data = {nodes: nodes, edges: edges};
+
+        var options = {
+    "configure": {
+        "enabled": false
+    },
+    "edges": {
+        "color": {
+            "inherit": true
+        },
+        "smooth": {
+            "enabled": false,
+            "type": "continuous"
+        }
+    },
+    "interaction": {
+        "dragNodes": true,
+        "hideEdgesOnDrag": false,
+        "hideNodesOnDrag": false
+    },
+    "physics": {
+        "barnesHut": {
+            "avoidOverlap": 0,
+            "centralGravity": 0.3,
+            "damping": 0.09,
+            "gravitationalConstant": -80000,
+            "springConstant": 0.001,
+            "springLength": 250
+        },
+        "enabled": true,
+        "stabilization": {
+            "enabled": true,
+            "fit": true,
+            "iterations": 1000,
+            "onlyDynamicEdges": false,
+            "updateInterval": 50
+        }
+    }
+};
+        
+        
+
+        
+
+        network = new vis.Network(container, data, options);
+	 
+        
+
+
+        
+
+        return network;
+
+    }
+
+    drawGraph();
+
+</script>
+</body>
+</html>
